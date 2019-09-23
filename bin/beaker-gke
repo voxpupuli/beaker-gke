@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require 'rubygems' unless defined?(Gem)
+require 'beaker-gke'
+
+puts BeakerGke::VERSION
+
+exit 0

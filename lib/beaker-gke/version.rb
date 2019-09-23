@@ -1,0 +1,3 @@
+module BeakerGke
+  VERSION = '0.0.1'
+end
