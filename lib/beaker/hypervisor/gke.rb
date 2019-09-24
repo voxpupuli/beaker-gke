@@ -1,5 +1,6 @@
 require 'kubeclient'
 require 'jsonpath'
+require 'beaker'
 require 'beaker-gke'
 require 'googleauth'
 
@@ -8,6 +9,7 @@ module Beaker
     SERVICE_NAMESPACE = 'gke-puppetagent-ci'.freeze
     PROXY_IP = '10.236.0.3'.freeze
     PROXY_PORT = 8899
+    MAX_RETRIES = 5
     # OS environment variable must be set to continue
     # ENV['CLIENT_CONFIG'] = 'path/.kube/config'
     # ENV['GOOGLE_APPLICATION_CREDENTIALS'] = 'path/.kube/puppetagent-ci.json'
@@ -26,16 +28,28 @@ module Beaker
     end
 
     def provision
-        puts caller
-        @hosts.each do |host|
-          hostname = generate_host_name
-          create_pod(hostname)
-          create_srv(hostname)
+      @hosts.each do |host|
+        hostname = generate_host_name
+        create_pod(hostname)
+        create_srv(hostname)
+        retries = 0
+        begin
           pod = get_pod(hostname)
-          host[:hostname] = pod.metadata.name
-          host[:ip] = pod.status.podIP
+          raise StandardError if pod.status.podIP.nil?
+        rescue StandardError => e
+          if retries <= MAX_RETRIES
+            retries += 1
+          puts 'Retrying , could not get podIP'
+          sleep(2 ** retries)
+          retry
+          else
+            raise "Timeout: #{e.message}"
+            end
         end
-        nil
+        host[:hostname] = pod.metadata.name
+        host[:ip] = pod.status.podIP
+      end
+      nil
     end
 
     def cleanup
