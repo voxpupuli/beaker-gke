@@ -45,7 +45,8 @@ module Beaker
             raise "Timeout: #{e.message}"
             end
         end
-        host[:vmhostname] = "#{pod.metadata.name}.gke-puppetagent-ci.puppet.net"
+        host[:vmhostname] = "#{hostname}.gke-puppetagent-ci.puppet.net"
+        host[:hostname] = hostname
         host[:ip] = pod.status.podIP
       end
       nil
@@ -59,7 +60,7 @@ module Beaker
     end
 
     def connection_preference(host)
-      [:ip, :hostname, :vmhostname]
+      [:ip, :vmhostname, :hostname]
     end
     
     def create_pod(name)
