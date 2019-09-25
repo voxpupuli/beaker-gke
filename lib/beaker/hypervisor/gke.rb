@@ -14,7 +14,6 @@ module Beaker
     # ENV['CLIENT_CONFIG'] = 'path/.kube/config'
     # ENV['GOOGLE_APPLICATION_CREDENTIALS'] = 'path/.kube/puppetagent-ci.json'
 
-
     def initialize(hosts, options)
       begin
         ENV.fetch('CLIENT_CONFIG')
@@ -46,7 +45,7 @@ module Beaker
             raise "Timeout: #{e.message}"
             end
         end
-        host[:hostname] = pod.metadata.name
+        host[:vmhostname] = "#{pod.metadata.name}.gke-puppetagent-ci.puppet.net"
         host[:ip] = pod.status.podIP
       end
       nil
@@ -90,7 +89,7 @@ module Beaker
        end
      end
     rescue Kubeclient::ResourceNotFoundError => e
-     puts "Service #{srv_name} could not be deleted #{e.to_s}"
+      puts "Service #{srv_name} could not be deleted #{e.to_s}"
     end
 
     private

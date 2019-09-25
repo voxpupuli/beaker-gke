@@ -27,12 +27,6 @@ Spec test live under the `spec` folder. There are the default rake task and ther
 bundle exec rake test:spec
 ```
 
-# Acceptance tests
-
-We run beaker's base acceptance tests with this library to see if the hypervisor is working with beaker. There is a simple rake task to invoke acceptance test for the library:
-```bash
-bundle exec rake test:acceptance
-```
 # Contributing
 
 Please refer to puppetlabs/beaker's [contributing](https://github.com/puppetlabs/beaker/blob/master/CONTRIBUTING.md) guide.
