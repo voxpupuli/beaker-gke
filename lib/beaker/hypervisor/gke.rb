@@ -24,31 +24,28 @@ module Beaker
       @hosts = hosts
       @options = options
       @client = client
+      @logger = options[:logger]
     end
 
     def provision
-      logger = Beaker::Logger.new
-      logger.info 'Pasting the root dir of the gem'
-      logger.info ROOT_DIR
-
       @hosts.each do |host|
         hostname = generate_host_name
         create_pod(hostname)
         create_srv(hostname)
         retries = 0
+
         begin
           pod = get_pod(hostname)
-          raise StandardError if pod.status.podIP.nil?
-        rescue StandardError => e
-          if retries <= MAX_RETRIES
-            retries += 1
-            puts 'Retrying , could not get podIP'
-            sleep(2**retries)
-            retry
-          else
-            raise "Timeout: #{e.message}"
-            end
+          raise StandardError unless pod.status.podIP
+        rescue StandardError => ex
+          raise "Timeout: #{ex.message}" unless retries <= MAX_RETRIES
+          @logger.info('Retrying , could not get podIP')
+
+          retries += 1
+          sleep(2**retries)
+          retry
         end
+
         host[:vmhostname] = "#{hostname}.gke-puppetagent-ci.puppet.net"
         host[:hostname] = hostname
         host[:ip] = pod.status.podIP
@@ -58,6 +55,8 @@ module Beaker
 
     def cleanup
       @hosts.each do |host|
+        @logger.info("Deleting POD with ID: #{host[:hostname]}")
+
         delete_pod(host[:hostname])
         delete_service(host[:hostname])
       end
@@ -93,8 +92,8 @@ module Beaker
          raise ArgumentError, 'Wrong argument type - #{srv_name.class}'
        end
      end
-    rescue Kubeclient::ResourceNotFoundError => e
-      puts "Service #{srv_name} could not be deleted #{e}"
+    rescue Kubeclient::ResourceNotFoundError => ex
+      @logger.info("Service #{srv_name} could not be deleted #{ex}")
     end
 
     private
