@@ -18,8 +18,11 @@ module Beaker
       begin
         ENV.fetch('KUBECONFIG')
         ENV.fetch('GOOGLE_APPLICATION_CREDENTIALS')
-      rescue StandardError
-        raise ArgumentError, 'OS environment variable KUBECONFIG and GOOGLE_APPLICATION_CREDENTIALS must be set'
+      rescue KeyError
+        raise(
+          ArgumentError,
+          'OS environment variable KUBECONFIG and GOOGLE_APPLICATION_CREDENTIALS must be set'
+        )
       end
       @hosts = hosts
       @options = options
@@ -37,8 +40,9 @@ module Beaker
         begin
           pod = get_pod(hostname)
           raise StandardError unless pod.status.podIP
-        rescue StandardError => ex
-          raise "Timeout: #{ex.message}" unless retries <= MAX_RETRIES
+        rescue StandardError => e
+          raise "Timeout: #{e.message}" unless retries <= MAX_RETRIES
+
           @logger.info('Retrying , could not get podIP')
 
           retries += 1
@@ -81,19 +85,17 @@ module Beaker
     end
 
     def delete_pod(pod_name)
-      @client.delete_pod(pod_name, SERVICE_NAMESPACE, delete_options: { 'force': 1, 'grace-period': 0 })
+      @client.delete_pod(
+        pod_name,
+        SERVICE_NAMESPACE,
+        delete_options: { 'force': 1, '--grace-period': 0 }
+      )
     end
 
     def delete_service(srv_name)
-      begin
-       if srv_name.instance_of?(String)
-         client.delete_service(srv_name, SERVICE_NAMESPACE)
-       else
-         raise ArgumentError, 'Wrong argument type - #{srv_name.class}'
-       end
-     end
-    rescue Kubeclient::ResourceNotFoundError => ex
-      @logger.info("Service #{srv_name} could not be deleted #{ex}")
+      client.delete_service(srv_name, SERVICE_NAMESPACE)
+    rescue Kubeclient::ResourceNotFoundError => e
+      @logger.info("Service #{srv_name} could not be deleted #{e}")
     end
 
     private
