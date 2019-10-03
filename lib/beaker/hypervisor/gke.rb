@@ -43,7 +43,7 @@ module Beaker
         rescue StandardError => e
           raise "Timeout: #{e.message}" unless retries <= MAX_RETRIES
 
-          @logger.info('Retrying , could not get podIP')
+          @logger.info("Retrying , could not get podIP for #{hostname}")
 
           retries += 1
           sleep(2**retries)
