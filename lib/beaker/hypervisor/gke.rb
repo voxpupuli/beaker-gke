@@ -3,6 +3,7 @@
 require 'kubeclient'
 require 'beaker-gke'
 require 'googleauth'
+require 'erb'
 
 module Beaker
   class Gke < Beaker::Hypervisor
@@ -117,7 +118,7 @@ module Beaker
     end
 
     def read_symbols(file, substitution = {})
-      data = read_file(file)
+      data = ERB.new(read_file(file)).result
       Psych.load(data % substitution, symbolize_names: true)
     end
   end
