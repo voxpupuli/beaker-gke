@@ -9,8 +9,8 @@
 :spec:
   :hostname: "%{pod_name}"
   :containers:
-    - :image: gcr.io/puppetagent-ci/centos-7:v5
-      :name: "centos-7"
+    - :image: gcr.io/puppetagent-ci/centos-7-master:v3
+      :name: "centos-7-master"
   :dnsPolicy: "None"
   :dnsConfig:
     nameservers:
