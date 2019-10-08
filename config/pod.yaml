@@ -12,10 +12,6 @@
   :containers:
     - :image: <%= ENV.fetch("CONTAINER_IMAGE") { "gcr.io/puppetagent-ci/centos-7-master:v4" } %>
       :name: "centos-7-master"
-      :resources:
-        :requests:
-          :memory: "4Gi"
-          :cpu: "2"
       :securityContext:
         :capabilities:
           :add:

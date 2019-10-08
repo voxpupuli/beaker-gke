@@ -94,7 +94,7 @@ module Beaker
     end
 
     def delete_service(srv_name)
-      client.delete_service(srv_name, SERVICE_NAMESPACE)
+      @client.delete_service(srv_name, SERVICE_NAMESPACE)
     rescue Kubeclient::ResourceNotFoundError => e
       @logger.info("Service #{srv_name} could not be deleted #{e}")
     end
