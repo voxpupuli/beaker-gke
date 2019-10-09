@@ -54,6 +54,7 @@ module Beaker
         host[:vmhostname] = "#{hostname}.gke-puppetagent-ci.puppet.net"
         host[:hostname] = hostname
         host[:ip] = pod.status.podIP
+        host[:gke_container] = true
       end
       nil
     end
