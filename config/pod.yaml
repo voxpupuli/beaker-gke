@@ -10,8 +10,8 @@
 :spec:
   :hostname: "%{pod_name}"
   :containers:
-    - :image: <%= ENV.fetch("CONTAINER_IMAGE") { "gcr.io/puppetagent-ci/centos-7-master:v4" } %>
-      :name: "centos-7-master"
+    - :image: <%= ENV.fetch("CONTAINER_IMAGE") { "gcr.io/puppetagent-ci/centos-7-base:v3" } %>
+      :name: "centos-7-base"
       :securityContext:
         :capabilities:
           :add:
