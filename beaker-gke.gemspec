@@ -19,8 +19,16 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map { |file| File.basename(file) }
   s.require_paths = ['lib']
 
-  # required ruby version
+  # Required ruby version
   s.required_ruby_version = '~> 2.3'
+
+  # Testing dependencies
+  s.add_development_dependency 'climate_control'
+  s.add_development_dependency 'fakefs', '~> 0.6', '<= 0.13.3'
+  s.add_development_dependency 'rake', '~> 10.1'
+  s.add_development_dependency 'rspec', '~> 3.0'
+  s.add_development_dependency 'rspec-its'
+  s.add_development_dependency 'simplecov'
 
   # Run time dependencies
   s.add_runtime_dependency 'googleauth', '~> 0.9'
