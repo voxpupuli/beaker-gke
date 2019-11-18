@@ -1,0 +1,20 @@
+# bundler
+.bundle
+Gemfile.local
+Gemfile.lock
+
+# JetBrains IDEA
+*.iml
+.idea/
+
+# rbenv file
+.ruby-version
+.ruby-gemset
+
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
