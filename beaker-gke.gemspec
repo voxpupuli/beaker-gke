@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
+$LOAD_PATH.unshift File.expand_path('lib', __dir__)
 
 require 'beaker-gke/version'
 
@@ -18,6 +18,9 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map { |file| File.basename(file) }
   s.require_paths = ['lib']
+
+  # required ruby version
+  s.required_ruby_version = '~> 2.3'
 
   # Run time dependencies
   s.add_runtime_dependency 'googleauth', '~> 0.9'

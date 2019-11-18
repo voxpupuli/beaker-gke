@@ -1,0 +1,22 @@
+---
+require:
+  - rubocop-rspec
+  - rubocop-performance
+AllCops:
+  TargetRubyVersion: 2.3
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 25
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/AbcSize:
+  Enabled: false
+
+Naming/FileName:
+  Exclude:
+    - 'lib/beaker-gke.rb'
