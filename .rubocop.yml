@@ -3,7 +3,7 @@ require:
   - rubocop-rspec
   - rubocop-performance
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.3
 
 Style/Documentation:
   Enabled: false
