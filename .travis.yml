@@ -7,3 +7,11 @@ script:
   - "bundle exec rake $CHECK"
 notifications:
   email: false
+
+matrix:
+  include:
+    - rvm: 2.5
+      env: "CHECK=rubocop"
+
+    - rvm: 2.5
+      env: "CHECK=test:spec:run"

@@ -9,14 +9,15 @@ namespace :test do
       t.rspec_opts = ['--color']
       t.pattern = 'spec/'
     end
-
-    desc 'Run spec tests with coverage'
-    RSpec::Core::RakeTask.new(:coverage) do |t|
-      ENV['BEAKER_DOCKER_COVERAGE'] = 'y'
-      t.rspec_opts = ['--color']
-      t.pattern = 'spec/'
-    end
   end
+end
+
+desc 'run static analysis with rubocop'
+task(:rubocop) do
+  require 'rubocop'
+  cli = RuboCop::CLI.new
+  exit_code = cli.run(%w[--display-cop-names --format simple])
+  raise 'RuboCop detected offenses' if exit_code != 0
 end
 
 # namespace-named default tasks.
