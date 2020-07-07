@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   # Required ruby version
-  s.required_ruby_version = '~> 2.3'
+  s.required_ruby_version = '~> 2.5'
 
   # Testing dependencies
   s.add_development_dependency 'climate_control'
