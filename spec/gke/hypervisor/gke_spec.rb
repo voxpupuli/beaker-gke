@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'beaker/hypervisor/gke'
+
 describe Beaker::Gke do
   let(:hosts) { make_hosts }
 

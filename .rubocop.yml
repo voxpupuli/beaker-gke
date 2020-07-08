@@ -3,7 +3,8 @@ require:
   - rubocop-rspec
   - rubocop-performance
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.5
+  NewCops: enable
 
 Style/Documentation:
   Enabled: false
@@ -11,7 +12,7 @@ Style/Documentation:
 Metrics/MethodLength:
   Max: 25
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
 
 Metrics/AbcSize:
