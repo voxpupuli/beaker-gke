@@ -32,5 +32,5 @@ Gem::Specification.new do |s|
 
   # Run time dependencies
   s.add_runtime_dependency 'googleauth', '~> 0.9'
-  s.add_runtime_dependency 'kubeclient', '>= 4.4', '< 4.9'
+  s.add_runtime_dependency 'kubeclient', '>= 4.4', '< 4.10'
 end
