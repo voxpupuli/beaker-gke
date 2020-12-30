@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
 
   # Testing dependencies
   s.add_development_dependency 'climate_control'
-  s.add_development_dependency 'fakefs', '~> 1.2', '<= 1.2.3'
+  s.add_development_dependency 'fakefs', '~> 1.2', '<= 1.3.2'
   s.add_development_dependency 'rake', '~> 13.0'
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-its'
