@@ -31,6 +31,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'simplecov'
 
   # Run time dependencies
-  s.add_runtime_dependency 'googleauth', '~> 0.9'
+  s.add_runtime_dependency 'googleauth', '>= 0.9', '< 2.0'
   s.add_runtime_dependency 'kubeclient', '>= 4.4', '< 4.10'
 end
